@@ -1,0 +1,47 @@
+import UIKit
+
+protocol PersonalInfoViewProtocol: AnyObject {
+    func saveChangesButtonTapped()
+}
+
+final class PersonalInfoViewController: UIViewController {
+    private let presenter: PersonalInfoPresenterProtocol
+    private lazy var profileView = PersonalInfoView(presenter: presenter)
+    
+    init(presenter: PersonalInfoPresenterProtocol) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func loadView() {
+        self.view = profileView
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationItem.title = "Personal Info"
+        let backButton = UIBarButtonItem(
+            image: UIImage(named: "back.arrow"),
+            style: .plain,
+            target: self,
+            action: #selector(backButtonTapped)
+        )
+        backButton.tintColor = UIColor(named: "#111827")
+        navigationItem.leftBarButtonItem = backButton
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+    }
+    
+    @objc func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
+    }
+}
+
+extension PersonalInfoViewController: PersonalInfoViewProtocol {
+    func saveChangesButtonTapped() {
+        presenter.saveChanges()
+    }
+}
