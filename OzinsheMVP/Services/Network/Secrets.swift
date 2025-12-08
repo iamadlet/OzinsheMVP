@@ -1,0 +1,3 @@
+enum Secrets {
+    static let apiKey: String = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2x5a2FpZkBnbWFpbC5jb20iLCJpYXQiOjE3NjUxNzk4NjQsImV4cCI6MTc5NjcxNTg2NH0.PiN8TogjWaeC4Wl0nLr-V1gkH5IEPxXqKVsk2HkdQDC6kQ0mStXwSoa9MjiOmwJ9G8NOHGgg5E8db9fFCM8ZGg"
+}

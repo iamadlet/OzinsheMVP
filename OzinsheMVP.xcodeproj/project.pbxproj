@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A09933982EE1E28100B89BDB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A09933972EE1E28100B89BDB /* SnapKit */; };
+		A09934EA2EE71CC600B89BDB /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = A09934E92EE71CC600B89BDB /* SDWebImage */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		A09933312EE1E0F100B89BDB /* OzinsheMVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OzinsheMVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A09934EA2EE71CC600B89BDB /* SDWebImage in Frameworks */,
+				A09933982EE1E28100B89BDB /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +85,8 @@
 			);
 			name = OzinsheMVP;
 			packageProductDependencies = (
+				A09933972EE1E28100B89BDB /* SnapKit */,
+				A09934E92EE71CC600B89BDB /* SDWebImage */,
 			);
 			productName = OzinsheMVP;
 			productReference = A09933312EE1E0F100B89BDB /* OzinsheMVP.app */;
@@ -107,6 +116,10 @@
 			);
 			mainGroup = A09933282EE1E0F100B89BDB;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A09933962EE1E28100B89BDB /* XCRemoteSwiftPackageReference "SnapKit" */,
+				A09934E82EE71CC600B89BDB /* XCRemoteSwiftPackageReference "SDWebImage" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A09933322EE1E0F100B89BDB /* Products */;
 			projectDirPath = "";
@@ -333,6 +346,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A09933962EE1E28100B89BDB /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		A09934E82EE71CC600B89BDB /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.21.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A09933972EE1E28100B89BDB /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A09933962EE1E28100B89BDB /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		A09934E92EE71CC600B89BDB /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A09934E82EE71CC600B89BDB /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A09933292EE1E0F100B89BDB /* Project object */;
 }

@@ -1,8 +1,9 @@
-//
-//  UIView+addSubviews.swift
-//  OzinsheMVP
-//
-//  Created by Адлет Жумагалиев on 04.12.2025.
-//
+import UIKit
 
-import Foundation
+extension UIView {
+    func addSubviews(_ views: UIView...) {
+        views.forEach ({
+            addSubview($0)
+        })
+    }
+}
