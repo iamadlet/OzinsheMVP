@@ -7,11 +7,13 @@ protocol TabViewRouterProtocol: AnyObject {
 final class TabViewRouter: TabViewRouterProtocol {
     private let profileFactory: ProfileFactory
     private let favoritesFactory: FavoritesFactory
+    private let searchFactory: SearchFactory
     private weak var root: UIViewController?
     
-    init(profileFactory: ProfileFactory, favoritesFactory: FavoritesFactory) {
+    init(profileFactory: ProfileFactory, favoritesFactory: FavoritesFactory, searchFactory: SearchFactory) {
         self.profileFactory = profileFactory
         self.favoritesFactory = favoritesFactory
+        self.searchFactory = searchFactory
     }
     
     func setRoot(root: UIViewController) {
@@ -32,8 +34,7 @@ final class TabViewRouter: TabViewRouterProtocol {
             selected: "HomeSelected"
         )
         
-        let searchVC = UIViewController()
-        searchVC.view.backgroundColor = .systemBackground
+        let searchVC = searchFactory.make()
         let searchNav = createNavController(
             root: searchVC,
             image: "Search",

@@ -2,6 +2,7 @@ import UIKit
 
 protocol PersonalInfoViewProtocol: AnyObject {
     func saveChangesButtonTapped()
+    func showUserProfile()
 }
 
 final class PersonalInfoViewController: UIViewController {
@@ -33,6 +34,7 @@ final class PersonalInfoViewController: UIViewController {
         backButton.tintColor = UIColor(named: "#111827")
         navigationItem.leftBarButtonItem = backButton
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        presenter.loadUserProfile()
     }
     
     @objc func backButtonTapped() {
@@ -43,5 +45,11 @@ final class PersonalInfoViewController: UIViewController {
 extension PersonalInfoViewController: PersonalInfoViewProtocol {
     func saveChangesButtonTapped() {
         presenter.saveChanges()
+    }
+    
+    func showUserProfile() {
+        profileView.emailTextField.text = presenter.getUser()?.email
+        profileView.nameTextField.text = presenter.getUser()?.name
+        profileView.phoneTextField.text = presenter.getUser()?.phoneNumber
     }
 }

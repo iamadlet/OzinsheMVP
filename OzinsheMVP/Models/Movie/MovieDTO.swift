@@ -18,7 +18,7 @@ struct MovieDTO: Decodable {
     let seriesCount: Int
     let timing: Int
     let trend: Bool
-    let video: VideoDTO
+    let video: VideoDTO?
     let watchCount: Int
     let year: Int
 }

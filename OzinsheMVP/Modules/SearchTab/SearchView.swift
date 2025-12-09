@@ -4,6 +4,10 @@ import SnapKit
 final class SearchView: UIView {
     private let presenter: SearchPresenterProtocol
     
+    var onSearchButtonTapped: ((String) -> Void)?
+    var onClearTapped: (() -> Void)?
+    var collectionViewHeightConstraint: Constraint?
+    
     init(presenter: SearchPresenterProtocol) {
         self.presenter = presenter
         super.init(frame: .zero)
@@ -14,13 +18,21 @@ final class SearchView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    lazy var headerDivider = {
+        let cell = UIView()
+        
+        cell.backgroundColor = UIColor(named: "#D1D5DB")
+        
+        return cell
+    }()
+    
     let searchTextField = {
         let searchTF = TextFieldWithPadding()
         
         searchTF.padding = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         searchTF.placeholder = "Search"
         searchTF.font = UIFont(name: "SFProDisplay-Semibold", size: 16)
-        searchTF.textColor = UIColor(named: "111827")
+        searchTF.textColor = UIColor(named: "#111827")
         searchTF.layer.borderWidth = 1.0
         searchTF.layer.borderColor = UIColor(red: 0.90, green: 0.92, blue: 0.94, alpha: 1.00).cgColor
         searchTF.layer.cornerRadius = 12.0
@@ -53,7 +65,7 @@ final class SearchView: UIView {
         
         label.text = "Categories"
         label.font = UIFont(name: "SFProDisplay-Bold", size: 24)
-        label.textColor = UIColor(named: "111827")
+        label.textColor = UIColor(named: "#111827")
         
         return label
     }()
@@ -63,12 +75,11 @@ final class SearchView: UIView {
         layout.sectionInset = UIEdgeInsets(top: 16.0, left: 24.0, bottom: 16.0, right: 24.0)
         layout.minimumLineSpacing = 16
         layout.minimumInteritemSpacing = 8
-        layout.itemSize = CGSize(width: 128, height: 34)
-        layout.estimatedItemSize.width = 100
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: "CategoryCell")
-        collectionView.backgroundColor = UIColor(named: "FFFFFF")
+        collectionView.backgroundColor = UIColor(named: "#FFFFFF")
         collectionView.contentInsetAdjustmentBehavior = .automatic
         
         return collectionView
@@ -80,7 +91,7 @@ final class SearchView: UIView {
         tv.allowsSelection = true
         tv.showsVerticalScrollIndicator = false
         tv.showsHorizontalScrollIndicator = false
-        tv.backgroundColor = UIColor(named: "FFFFFF")
+        tv.backgroundColor = UIColor(named: "#FFFFFF")
         //Регистрация table view cell
         tv.register(MovieTableViewCell.self, forCellReuseIdentifier: "MovieCell")
         
@@ -91,22 +102,32 @@ final class SearchView: UIView {
 extension SearchView {
     func commonInit() {
         self.backgroundColor = UIColor(named: "#FFFFFF")
+        setupSubviews()
+        setupConstraints()
     }
     
     @objc func clearTextField() {
         searchTextField.text = ""
+        onClearTapped?()
     }
     
     @objc func searchButtonTapped() {
-        self.collectionView.isHidden = true
-        self.tableView.reloadData()
+        if let text = searchTextField.text {
+            onSearchButtonTapped?(text)
+        }
     }
     
     func setupSubviews() {
-        self.addSubviews(searchButton, searchTextField, exitButton, titleLabel, collectionView, tableView)
+        self.addSubviews(headerDivider, searchButton, searchTextField, exitButton, titleLabel, collectionView, tableView)
     }
     
     func setupConstraints() {
+        headerDivider.snp.makeConstraints { make in
+            make.top.equalTo(self.safeAreaLayoutGuide).offset(1)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        
         searchTextField.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide).inset(24)
             make.left.equalToSuperview().inset(24)
@@ -116,7 +137,6 @@ extension SearchView {
         }
         
         exitButton.snp.makeConstraints { make in
-            
             make.height.equalTo(52)
             make.width.equalTo(52)
             make.right.equalTo(searchTextField.snp.right).offset(0)
@@ -140,6 +160,7 @@ extension SearchView {
             make.top.equalTo(titleLabel.snp.bottom)
             make.right.left.equalToSuperview()
             make.bottom.equalTo(tableView.snp.top)
+            self.collectionViewHeightConstraint = make.height.equalTo(340).constraint
             make.height.equalTo(340)
         }
         

@@ -6,7 +6,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
     
     let backView = {
         let view = UIView()
-        view.backgroundColor = UIColor(named: "F3F4F6 - 374151")
+        view.backgroundColor = UIColor(named: "#F3F4F6")
         view.layer.cornerRadius = 8
         return view
     }()
@@ -14,7 +14,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
     let label: UILabel = {
         let labelCell = UILabel()
         labelCell.font = UIFont(name: "SFProDisplay-Semibold", size: 12)
-        labelCell.textColor = UIColor(named: "374151 - 1C2431")
+        labelCell.textColor = UIColor(named: "#374151")
         
         return labelCell
     }()
@@ -22,7 +22,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
-        backgroundColor = UIColor(named: "FFFFFF")
+        backgroundColor = UIColor(named: "#FFFFFF")
         layer.cornerRadius = 8
     }
     
@@ -42,8 +42,11 @@ extension CategoryCollectionViewCell {
     }
     
     func setupSubviews() {
-        self.addSubview(backView)
+        contentView.addSubview(backView)
         backView.addSubview(label)
+        
+        label.setContentHuggingPriority(.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
     }
     
     func setupConstraints() {

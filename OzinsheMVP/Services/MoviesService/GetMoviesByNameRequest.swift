@@ -1,10 +1,10 @@
 import Foundation
 
-struct GetMoviesRequest: ApiRequestProtocol {
+struct GetMoviesByNameRequest: ApiRequestProtocol {
     typealias Response = [MovieDTO]
     
     var endpoint: String {
-        "core/V1/movies"
+        "/core/V1/movies"
     }
     
     var parameters: [URLQueryItem]? {

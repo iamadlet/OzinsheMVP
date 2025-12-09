@@ -1,5 +1,6 @@
 protocol MoviesServiceProtocol: AnyObject {
-    func fetchMovies(request: GetMoviesRequest, completion: @escaping (Result<[Movie], ApiClientError>) -> Void)
+    func fetchMoviesByName(request: GetMoviesByNameRequest, completion: @escaping (Result<[Movie], ApiClientError>) -> Void)
+    func fetchMoviesByCategoryId(request: GetMoviesByCategoryIdRequest, completion: @escaping (Result<[Movie], ApiClientError>) -> Void)
 }
 
 final class MoviesService: MoviesServiceProtocol {
@@ -9,11 +10,23 @@ final class MoviesService: MoviesServiceProtocol {
         self.networkClient = networkClient
     }
     
-    func fetchMovies(request: GetMoviesRequest, completion: @escaping (Result<[Movie], ApiClientError>) -> Void) {
+    func fetchMoviesByName(request: GetMoviesByNameRequest, completion: @escaping (Result<[Movie], ApiClientError>) -> Void) {
         networkClient.send(request: request) { (result: Result<[MovieDTO], ApiClientError>) in
             switch result {
             case .success(let moviesResponse):
                 let movies = moviesResponse.compactMap { Movie(response: $0) }
+                completion(.success(movies))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func fetchMoviesByCategoryId(request: GetMoviesByCategoryIdRequest, completion: @escaping (Result<[Movie], ApiClientError>) -> Void) {
+        networkClient.send(request: request) { (result: Result<GetMoviesByCategoryIdRequest.Response, ApiClientError>) in
+            switch result {
+            case .success(let response):
+                let movies = response.content.compactMap { Movie(response: $0) }
                 completion(.success(movies))
             case .failure(let error):
                 completion(.failure(error))

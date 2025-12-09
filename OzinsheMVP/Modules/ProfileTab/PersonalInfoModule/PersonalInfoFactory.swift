@@ -2,7 +2,9 @@ import UIKit
 
 final class PersonalInfoFactory {
     func make() -> UIViewController {
-        let presenter = PersonalInfoPresenter()
+        let userProfileService = UserProfileService(networkClient: NetworkClient(host: "apiozinshe.mobydev.kz", token: Secrets.apiKey))
+        
+        let presenter = PersonalInfoPresenter(userProfileService: userProfileService)
         
         let vc = PersonalInfoViewController(presenter: presenter)
         
