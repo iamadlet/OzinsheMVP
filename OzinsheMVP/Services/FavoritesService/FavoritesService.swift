@@ -3,7 +3,7 @@ protocol FavoritesServiceProtocol: AnyObject {
 }
 
 class FavoritesService: FavoritesServiceProtocol {
-    let networkClient: NetworkClientProtocol
+    private let networkClient: NetworkClientProtocol
     
     init(networkClient: NetworkClientProtocol) {
         self.networkClient = networkClient

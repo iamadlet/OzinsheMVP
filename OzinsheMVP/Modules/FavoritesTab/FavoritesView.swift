@@ -49,9 +49,6 @@ extension FavoritesView {
     
     func setupConstraints() {
         movieTableView.snp.makeConstraints { make in
-//            make.top.equalTo(self.safeAreaLayoutGuide).offset(24)
-//            make.leading.trailing.equalToSuperview().inset(24)
-//            make.bottom.equalToSuperview()
             make.top.bottom.leading.trailing.equalToSuperview()
         }
         

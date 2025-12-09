@@ -5,3 +5,13 @@ struct CategoryDTO: Decodable {
     let movieLing: String
     let name: String
 }
+
+struct Category {
+    let name: String
+}
+
+extension Category {
+    init?(response: CategoryDTO) {
+        self.name = response.name
+    }
+}

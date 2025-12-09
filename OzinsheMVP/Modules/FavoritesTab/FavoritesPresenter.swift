@@ -17,8 +17,6 @@ final class FavoritesPresenter {
         }
     }
     
-    
-    
     init(router: FavoritesRouterProtocol, favoritesService: FavoritesServiceProtocol) {
         self.router = router
         self.favoritesService = favoritesService
@@ -37,7 +35,7 @@ extension FavoritesPresenter: FavoritesPresenterProtocol {
                     self.favoriteMovies = favorites
                     self.view?.reloadTableView()
                 case .failure(let error):
-                    print("Error: \(error)")
+                    print("Error while loading favorites: \(error)")
                 }
             }
         }

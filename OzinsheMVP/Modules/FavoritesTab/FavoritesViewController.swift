@@ -25,7 +25,7 @@ final class FavoritesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.view.backgroundColor = UIColor(named: "#FFFFFF")
+        self.view.backgroundColor = UIColor(named: "#F9FAFB")
         navigationItem.title = "Favorites"
         favoritesView.movieTableView.dataSource = self
         favoritesView.movieTableView.delegate = self
@@ -35,7 +35,7 @@ final class FavoritesViewController: UIViewController {
 
 extension FavoritesViewController: FavoritesViewProtocol {
     func didTapMovie() {
-        
+        // TODO: Create MovieModule
     }
     
     func showFavoriteMovies() {
