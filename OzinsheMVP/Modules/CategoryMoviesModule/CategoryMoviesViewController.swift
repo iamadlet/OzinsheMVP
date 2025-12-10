@@ -1,16 +1,16 @@
 import UIKit
 
-protocol FavoritesViewProtocol: AnyObject {
+protocol CategoryMoviesViewProtocol: AnyObject {
     func didTapMovie()
-    func showFavoriteMovies()
+    func showMovies()
     func reloadTableView()
 }
 
-final class FavoritesViewController: UIViewController {
-    private let presenter: FavoritesPresenterProtocol
-    private lazy var favoritesView = FavoritesView(presenter: presenter)
+final class CategoryMoviesViewController: UIViewController {
+    private let presenter: CategoryMoviePresenterProtocol
+    private lazy var moviesView = CategoryMoviesView(presenter: presenter)
     
-    init(presenter: FavoritesPresenterProtocol) {
+    init(presenter: CategoryMoviePresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -20,38 +20,38 @@ final class FavoritesViewController: UIViewController {
     }
     
     override func loadView() {
-        self.view = favoritesView
+        self.view = moviesView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "#F9FAFB")
-        favoritesView.backgroundColor = UIColor(named: "#F9FAFB")
-        favoritesView.movieTableView.backgroundColor = UIColor(named: "#F9FAFB")
+        moviesView.backgroundColor = UIColor(named: "#F9FAFB")
+        moviesView.movieTableView.backgroundColor = UIColor(named: "#F9FAFB")
         navigationItem.title = "Favorites"
-        favoritesView.movieTableView.dataSource = self
-        favoritesView.movieTableView.delegate = self
-        showFavoriteMovies()
+        moviesView.movieTableView.dataSource = self
+        moviesView.movieTableView.delegate = self
+        showMovies()
     }
 }
 
-extension FavoritesViewController: FavoritesViewProtocol {
+extension CategoryMoviesViewController: CategoryMoviesViewProtocol {
     func didTapMovie() {
-        // TODO: Create MovieModule
+        
     }
     
-    func showFavoriteMovies() {
-        presenter.loadFavorites()
+    func showMovies() {
+        
     }
     
     func reloadTableView() {
-        favoritesView.movieTableView.reloadData()
+        
     }
 }
 
-extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
+extension CategoryMoviesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter.numberOfFavorites()
+        presenter.numberOfMovies()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

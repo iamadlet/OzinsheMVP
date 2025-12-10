@@ -8,12 +8,14 @@ final class TabViewRouter: TabViewRouterProtocol {
     private let profileFactory: ProfileFactory
     private let favoritesFactory: FavoritesFactory
     private let searchFactory: SearchFactory
+    private let homeFactory: HomeFactory
     private weak var root: UIViewController?
     
-    init(profileFactory: ProfileFactory, favoritesFactory: FavoritesFactory, searchFactory: SearchFactory) {
+    init(profileFactory: ProfileFactory, favoritesFactory: FavoritesFactory, searchFactory: SearchFactory, homeFactory: HomeFactory) {
         self.profileFactory = profileFactory
         self.favoritesFactory = favoritesFactory
         self.searchFactory = searchFactory
+        self.homeFactory = homeFactory
     }
     
     func setRoot(root: UIViewController) {
@@ -23,11 +25,13 @@ final class TabViewRouter: TabViewRouterProtocol {
     
     func assembleTabs() -> [UIViewController] {
         let profileVC = profileFactory.make()
-        let profileNav = createNavController(root: profileVC, image: "Profile", selected: "ProfileSelected")
+        let profileNav = createNavController(
+            root: profileVC,
+            image: "Profile",
+            selected: "ProfileSelected"
+        )
         
-        let homeVC = UIViewController()
-        homeVC.view.backgroundColor = .systemBackground // Чтобы не было черного экрана
-        homeVC.title = "Home (WIP)" // Временный заголовок
+        let homeVC = homeFactory.make()
         let homeNav = createNavController(
             root: homeVC,
             image: "Home",

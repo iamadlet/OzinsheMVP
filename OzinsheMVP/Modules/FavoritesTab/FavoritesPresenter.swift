@@ -28,8 +28,8 @@ extension FavoritesPresenter: FavoritesPresenterProtocol {
         let request = GetFavoriteMoviesRequest()
         
         favoritesService.fetchFavoriteMovies(request: request) { [weak self] result in
+            guard let self = self else { return }
             DispatchQueue.main.async {
-                guard let self = self else { return }
                 switch result {
                 case .success(let favorites):
                     self.favoriteMovies = favorites

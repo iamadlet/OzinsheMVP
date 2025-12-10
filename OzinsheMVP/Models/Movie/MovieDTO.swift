@@ -1,6 +1,8 @@
 import Foundation
 
 struct MovieDTO: Decodable {
+    let categories: [CategoryDTO]
+    // TODO: Add CategoryAges Model & add property here
     let createdDate: String
     let description: String
     let director: String
@@ -28,6 +30,9 @@ struct Movie {
     let name: String
     let posterLink: String
     let yearText: String
+    let description: String
+    
+    let categories: [String]
     
     // TODO: - Change GenreDTO to Genre Model
     let genres: [String]
@@ -40,6 +45,10 @@ extension Movie {
         self.name = response.name
         self.posterLink = response.poster.link
         self.yearText = String(response.year)
+        self.description = response.description
+        
+        let domainCategories = response.categories.compactMap { $0.name }
+        self.categories = domainCategories
         
         let domainGenres = response.genres.compactMap { $0.name }
         self.genres = domainGenres

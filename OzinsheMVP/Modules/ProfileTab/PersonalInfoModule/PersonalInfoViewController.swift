@@ -51,5 +51,18 @@ extension PersonalInfoViewController: PersonalInfoViewProtocol {
         profileView.emailTextField.text = presenter.getUser()?.email
         profileView.nameTextField.text = presenter.getUser()?.name
         profileView.phoneTextField.text = presenter.getUser()?.phoneNumber
+        profileView.birthdayPicker.date = stringToDate(presenter.getUser()?.birthDate)
+    }
+    
+    private func stringToDate(_ string: String?) -> Date {
+        guard let string = string else {
+            return Date()
+        }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        return formatter.date(from: string) ?? Date()
     }
 }

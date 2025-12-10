@@ -1,21 +1,21 @@
 import Foundation
 
-struct GenreDTO: Decodable {
-    let fileId: Int
+struct CategoryAgeDTO: Decodable {
+    let fileId: Int?
     let id: Int
     let link: String
     let movieCount: Int?
     let name: String
 }
 
-struct Genre {
+struct CategoryAge {
     let id: Int
     let name: String
     let link: URL?
 }
 
-extension Genre {
-    init?(response: GenreDTO) {
+extension CategoryAge {
+    init?(response: CategoryAgeDTO) {
         self.id = response.id
         self.name = response.name
         let link = response.link

@@ -2,7 +2,7 @@ import UIKit
 
 final class TabViewFactory {
     func make() -> UIViewController {
-        let router = TabViewRouter(profileFactory: ProfileFactory(), favoritesFactory: FavoritesFactory(), searchFactory: SearchFactory())
+        let router = TabViewRouter(profileFactory: ProfileFactory(), favoritesFactory: FavoritesFactory(), searchFactory: SearchFactory(), homeFactory: HomeFactory())
         
         let presenter = TabViewPresenter(router: router)
         let vc = TabViewController(presenter: presenter)
