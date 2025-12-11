@@ -7,11 +7,13 @@ protocol CategoryMoviesViewProtocol: AnyObject {
 }
 
 final class CategoryMoviesViewController: UIViewController {
-    private let presenter: CategoryMoviePresenterProtocol
+    private let presenter: CategoryMoviesPresenterProtocol
+    private let source: MoviesPageSource
     private lazy var moviesView = CategoryMoviesView(presenter: presenter)
     
-    init(presenter: CategoryMoviePresenterProtocol) {
+    init(presenter: CategoryMoviesPresenterProtocol, source: MoviesPageSource) {
         self.presenter = presenter
+        self.source = source
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -28,10 +30,21 @@ final class CategoryMoviesViewController: UIViewController {
         view.backgroundColor = UIColor(named: "#F9FAFB")
         moviesView.backgroundColor = UIColor(named: "#F9FAFB")
         moviesView.movieTableView.backgroundColor = UIColor(named: "#F9FAFB")
-        navigationItem.title = "Favorites"
+        navigationItem.title = source.title
+        let backButton = UIBarButtonItem(
+            image: UIImage(named: "back.arrow"),
+            style: .plain,
+            target: self,
+            action: #selector(backButtonTapped)
+        )
+        backButton.tintColor = UIColor(named: "#111827")
+        navigationItem.leftBarButtonItem = backButton
         moviesView.movieTableView.dataSource = self
         moviesView.movieTableView.delegate = self
-        showMovies()
+    }
+    
+    @objc func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -41,11 +54,11 @@ extension CategoryMoviesViewController: CategoryMoviesViewProtocol {
     }
     
     func showMovies() {
-        
+        moviesView.movieTableView.reloadData()
     }
     
     func reloadTableView() {
-        
+        moviesView.movieTableView.reloadData()
     }
 }
 

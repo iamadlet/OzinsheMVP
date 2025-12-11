@@ -2,9 +2,9 @@ import UIKit
 import SnapKit
 
 final class CategoryMoviesView: UIView {
-    private let presenter: CategoryMoviePresenterProtocol
+    private let presenter: CategoryMoviesPresenterProtocol
     
-    init(presenter: CategoryMoviePresenterProtocol) {
+    init(presenter: CategoryMoviesPresenterProtocol) {
         self.presenter = presenter
         super.init(frame: .zero)
         commonInit()

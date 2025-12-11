@@ -11,6 +11,11 @@ protocol MoviesServiceProtocol: AnyObject {
         request: GetMoviesForMainRequest,
         completion: @escaping (Result<[(categoryName: String, movies: [Movie])], ApiClientError>) -> Void
     )
+    
+    func fetchMoviesById(
+        source: MoviesPageSource,
+        completion: @escaping (Result<[Movie], ApiClientError>) -> Void
+    )
 }
 
 final class MoviesService: MoviesServiceProtocol {
@@ -20,7 +25,10 @@ final class MoviesService: MoviesServiceProtocol {
         self.networkClient = networkClient
     }
     
-    func fetchMoviesByName(request: GetMoviesByNameRequest, completion: @escaping (Result<[Movie], ApiClientError>) -> Void) {
+    func fetchMoviesByName(
+        request: GetMoviesByNameRequest,
+        completion: @escaping (Result<[Movie], ApiClientError>) -> Void
+    ) {
         networkClient.send(request: request) { (result: Result<[MovieDTO], ApiClientError>) in
             switch result {
             case .success(let moviesResponse):
@@ -32,7 +40,10 @@ final class MoviesService: MoviesServiceProtocol {
         }
     }
     
-    func fetchMoviesByCategoryId(request: GetMoviesByCategoryIdRequest, completion: @escaping (Result<[Movie], ApiClientError>) -> Void) {
+    func fetchMoviesByCategoryId(
+        request: GetMoviesByCategoryIdRequest,
+        completion: @escaping (Result<[Movie], ApiClientError>) -> Void
+    ) {
         networkClient.send(request: request) { (result: Result<GetMoviesByCategoryIdRequest.Response, ApiClientError>) in
             switch result {
             case .success(let response):
@@ -56,6 +67,23 @@ final class MoviesService: MoviesServiceProtocol {
                     return (category.categoryName, movies)
                 }
                 completion(.success(mapped))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func fetchMoviesById(
+        source: MoviesPageSource,
+        completion: @escaping (Result<[Movie], ApiClientError>) -> Void
+    ) {
+        let request = GetMoviesPageRequest(source: source)
+        
+        networkClient.send(request: request) { (result: Result<GetMoviesPageRequest.Response, ApiClientError>) in
+            switch result {
+            case .success(let response):
+                let movies = response.content.compactMap { Movie(response: $0) }
+                completion(.success(movies))
             case .failure(let error):
                 completion(.failure(error))
             }

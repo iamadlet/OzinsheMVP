@@ -3,11 +3,13 @@ import UIKit
 protocol SearchPresenterProtocol: AnyObject {
     func loadCategories()
     func loadMoviesByName(_ name: String)
-    func loadMoviesByCategoryId(_ id: Int)
+//    func loadMoviesByCategoryId(_ id: Int)
     func category(at index: Int) -> Category
     func movie(at index: Int) -> Movie
     func getCategoriesCount() -> Int
     func getMoviesCount() -> Int
+    
+    func didSelectCategory(at index: Int)
 }
 
 final class SearchPresenter {
@@ -75,13 +77,29 @@ extension SearchPresenter: SearchPresenterProtocol {
             }
         }
     }
+//    
+//    func loadMoviesByCategoryId(_ id: Int) {
+//        let request = GetMoviesByCategoryIdRequest(categoryId: id)
+//        
+//        moviesService.fetchMoviesByCategoryId(request: request) { [weak self] result in
+//            DispatchQueue.main.async {
+//                guard let self = self else { return }
+//                switch result {
+//                case .success(let movies):
+//                    self.movies = movies
+//                    self.view?.showMovies()
+//                case .failure(let error):
+//                    print("Error while loading movies: \(error)")
+//                    print("Localized: \(error.localizedDescription)")
+//                }
+//            }
+//        }
+//    }
     
-    func loadMoviesByCategoryId(_ id: Int) {
-        let request = GetMoviesByCategoryIdRequest(categoryId: id)
-        
-        moviesService.fetchMoviesByCategoryId(request: request) { [weak self] result in
+    func loadMovies(by source: MoviesPageSource) {
+        moviesService.fetchMoviesById(source: source) { [weak self] result in
+            guard let self = self else { return }
             DispatchQueue.main.async {
-                guard let self = self else { return }
                 switch result {
                 case .success(let movies):
                     self.movies = movies
@@ -92,6 +110,15 @@ extension SearchPresenter: SearchPresenterProtocol {
                 }
             }
         }
+    }
+    
+    func didSelectCategory(at index: Int) {
+        print("didSelectCategory called for index:", index)
+        let category = categories[index]
+        
+        let source = MoviesPageSource.category(category)
+        
+        router.openCategoryMoviesModule(source: source)
     }
     
     func category(at index: Int) -> Category {

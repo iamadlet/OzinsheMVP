@@ -42,7 +42,7 @@ final class ProfileRouter: ProfileRouterProtocol {
             if #available(iOS 16.0, *) {
                 sheet.detents = [.custom { _ in return 303 }]
             } else {
-                sheet.detents = [.medium()] // Фоллбек для старых iOS
+                sheet.detents = [.medium()]
             }
             sheet.prefersGrabberVisible = true
             sheet.preferredCornerRadius = 32

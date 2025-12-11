@@ -2,7 +2,7 @@ import UIKit
 
 final class SearchFactory {
     func make() -> UIViewController {
-        let router = SearchRouter()
+        let router = SearchRouter(categoryMoviesFactory: CategoryMoviesFactory())
         
         let networkClient = NetworkClient(host: "apiozinshe.mobydev.kz", token: Secrets.apiKey)
         
@@ -12,6 +12,9 @@ final class SearchFactory {
         let presenter = SearchPresenter(router: router, categoriesService: categoriesService, moviesService: moviesService)
         let vc = SearchViewController(presenter: presenter)
         presenter.view = vc
+        
+        router.setRootViewController(root: vc)
+        
         return vc
     }
 }

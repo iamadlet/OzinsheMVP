@@ -98,9 +98,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let category = presenter.category(at: indexPath.item)
-        presenter.loadMoviesByCategoryId(category.id)
-        print("Tapped category: \(category.name)")
+        presenter.didSelectCategory(at: indexPath.item)
     }
 }
 
