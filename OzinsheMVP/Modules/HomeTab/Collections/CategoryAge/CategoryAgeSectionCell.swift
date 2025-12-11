@@ -71,4 +71,13 @@ extension CategoryAgeSectionCell: UICollectionViewDelegate, UICollectionViewData
         
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("TAPPED ITEM")
+        guard let categoryAge = presenter?.categoryAge(at: indexPath.item) else { return }
+        
+        let source = MoviesPageSource.categoryAge(categoryAge)
+        
+        presenter?.openMoviesTablePage(source)
+    }
 }

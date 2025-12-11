@@ -23,7 +23,7 @@ final class CategoryAgeCollectionViewCell: UICollectionViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "SFProDisplay-Semibold", size: 14)
-        label.textColor = UIColor(named: "#F9FAFB")
+        label.textColor = .white
         return label
     }()
 }

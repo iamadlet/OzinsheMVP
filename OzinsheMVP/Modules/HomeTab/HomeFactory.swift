@@ -2,6 +2,10 @@ import UIKit
 
 final class HomeFactory {
     func make() -> UIViewController {
+        let categoryMoviesFactory = CategoryMoviesFactory()
+        
+        let router = HomeRouter(categoryMoviesFactory: categoryMoviesFactory)
+        
         let networkClient = NetworkClient(host: "apiozinshe.mobydev.kz", token: Secrets.apiKey)
         
         let mainMoviesService = MainMoviesService(networkClient: networkClient)
@@ -15,11 +19,14 @@ final class HomeFactory {
             historyService: historyService,
             categoriesService: categoriesService,
             genresService: genresService,
-            moviesService: moviesService
+            moviesService: moviesService,
+            router: router
         )
         
         let vc = HomeViewController(presenter: presenter)
         presenter.view = vc
+        
+        router.root = vc
         
         return vc
     }

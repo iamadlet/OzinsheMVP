@@ -23,6 +23,8 @@ protocol HomePresenterProtocol: AnyObject {
     func loadMainCategories()
     func moviesByCategoryCount(at sectionIndex: Int) -> Int
     func movieByCategory(at itemIndex: Int, sectionIndex: Int) -> Movie
+    
+    func openMoviesTablePage(_ source: MoviesPageSource)
 }
 
 final class HomePresenter {
@@ -32,12 +34,15 @@ final class HomePresenter {
     private let genresService: GenresServiceProtocol
     private let moviesService: MoviesServiceProtocol
     
-    init(mainMoviesService: MainMoviesServiceProtocol, historyService: HistoryServiceProtocol, categoriesService: CategoriesServiceProtocol, genresService: GenresServiceProtocol, moviesService: MoviesServiceProtocol) {
+    private let router: HomeRouterProtocol
+    
+    init(mainMoviesService: MainMoviesServiceProtocol, historyService: HistoryServiceProtocol, categoriesService: CategoriesServiceProtocol, genresService: GenresServiceProtocol, moviesService: MoviesServiceProtocol, router: HomeRouterProtocol) {
         self.mainMoviesService = mainMoviesService
         self.historyService = historyService
         self.categoriesService = categoriesService
         self.genresService = genresService
         self.moviesService = moviesService
+        self.router = router
     }
     
     weak var view: HomeViewProtocol?
@@ -281,6 +286,11 @@ extension HomePresenter: HomePresenterProtocol {
         
         fatalError("movieByCategory called on non-categoryMovies section")
     }
+    
+    // MARK: - ROUTER METHODS
+    func openMoviesTablePage(_ source: MoviesPageSource) {
+        router.openMoviesTablePage(source: source)
+    }
 }
 
 enum HomeSection {
@@ -288,7 +298,7 @@ enum HomeSection {
     case continueWatching([Movie]) // DONE
     case ageCategories([CategoryAge]) // DONE
     case genres([Genre]) // DONE
-    case categoryMovies(title: String, movies: [Movie])
+    case categoryMovies(title: String, movies: [Movie]) // DONE
     
     var order: Int {
         switch self {
